@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 int findMax(int num1, int num2) {
     int max;
 
