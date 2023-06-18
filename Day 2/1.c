@@ -6,7 +6,7 @@ void printPattern(int n);
 
 int main() {
     int n;
-
+    //Getting the value n
     printf("Enter the value of n: ");
     scanf("%d", &n);
 

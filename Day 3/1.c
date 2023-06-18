@@ -3,7 +3,7 @@
 void printExponent(double x) {
     unsigned long long *p = (unsigned long long *) &x;  // Type cast to access the bits
     unsigned long long exponent = (*p >> 52) & 0x7FF;   // Extracting the exponent bits
-
+    //Getting the hexadecimal and binary value
     printf("Exponent in hexadecimal: 0x%llX\n", exponent);
     printf("Exponent in binary: 0b");
     
