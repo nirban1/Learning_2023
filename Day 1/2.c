@@ -2,7 +2,7 @@
 
 int main() {
     int score;
-
+    //Getting students score
     printf("Enter the student's score: ");
     scanf("%d", &score);
 
@@ -19,6 +19,5 @@ int main() {
     } else {
         printf("Invalid score entered.\n");
     }
-
     return 0;
 }
