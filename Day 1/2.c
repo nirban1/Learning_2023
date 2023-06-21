@@ -1,23 +1,31 @@
 #include <stdio.h>
 
-int main() {
-    int score;
-    //Getting students score
-    printf("Enter the student's score: ");
-    scanf("%d", &score);
+void printBits(unsigned int num);
 
-    if (score >= 90 && score <= 100) {
-        printf("Grade A\n");
-    } else if (score >= 75 && score <= 89) {
-        printf("Grade B\n");
-    } else if (score >= 60 && score <= 74) {
-        printf("Grade C\n");
-    } else if (score >= 50 && score <= 59) {
-        printf("Grade D\n");
-    } else if (score >= 0 && score <= 49) {
-        printf("Grade F\n");
-    } else {
-        printf("Invalid score entered.\n");
+void printBits(unsigned int num) {
+    int i;
+    unsigned int mask = 1 << 31; 
+
+    for (i = 0; i < 32; i++) {
+        // Check if the current bit is set 1 or not 0
+        if ((num & mask) != 0)
+            printf("1");
+        else
+            printf("0");
+
+        // Shift to the right by one bit
+        mask >>= 1;
     }
+}
+
+int main() {
+    unsigned int num;
+
+    printf("Enter a 32-bit integer: ");
+    scanf("%u", &num);
+
+    printf("Bits representation: ");
+    printBits(num);
+
     return 0;
 }
