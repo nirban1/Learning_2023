@@ -1,41 +1,66 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-struct Box {
-  double length;
-  double width;
-  double height;
+struct Student {
+    int rollno;
+    char name[20];
+    float marks;
 };
 
-double calculateVolume(struct Box* boxPtr) {
-  return boxPtr->length * boxPtr->width * boxPtr->height;
-}
+void parseString(const char* inputString, struct Student* students, int size) {
+    const char* delimiter = " ";
+    char* token = strtok((char*)inputString, delimiter);
 
-double calculateSurfaceArea(struct Box* boxPtr) {
-  return 2 * (boxPtr->length * boxPtr->width +
-              boxPtr->length * boxPtr->height +
-              boxPtr->width * boxPtr->height);
+    for (int i = 0; i < size; i++) {
+        if (token == NULL) {
+            printf("Invalid input: Insufficient data provided.\n");
+            return;
+        }
+
+        students[i].rollno = atoi(token);
+        token = strtok(NULL, delimiter);
+
+        if (token == NULL) {
+            printf("Invalid input: Insufficient data provided.\n");
+            return;
+        }
+
+        strncpy(students[i].name, token, sizeof(students[i].name) - 1);
+        students[i].name[sizeof(students[i].name) - 1] = '\0';
+        token = strtok(NULL, delimiter);
+
+        if (token == NULL) {
+            printf("Invalid input: Insufficient data provided.\n");
+            return;
+        }
+
+        students[i].marks = atof(token);
+        token = strtok(NULL, delimiter);
+    }
 }
 
 int main() {
-  struct Box box;
-  struct Box* boxPtr = &box;
+    int size;
+    printf("Enter the number of students: ");
+    scanf("%d", &size);
+    getchar(); 
 
-  // Input box dimensions
-  printf("Enter the length of the box: ");
-  scanf("%lf", &(boxPtr->length));
+    struct Student* students = (struct Student*)malloc(size * sizeof(struct Student));
 
-  printf("Enter the width of the box: ");
-  scanf("%lf", &(boxPtr->width));
+    printf("Enter the student details in the format 'rollno name marks':\n");
+    for (int i = 0; i < size; i++) {
+        char inputString[100];
+        fgets(inputString, sizeof(inputString), stdin);
+        inputString[strcspn(inputString, "\n")] = '\0'; 
+        parseString(inputString, &students[i], 1);
+    }
 
-  printf("Enter the height of the box: ");
-  scanf("%lf", &(boxPtr->height));
+    printf("\nStudent Details:\n");
+    for (int i = 0; i < size; i++) {
+        printf("Roll No: %d, Name: %s, Marks: %.2f\n", students[i].rollno, students[i].name, students[i].marks);
+    }
 
-  // Calculate and display the volume and surface area
-  double volume = calculateVolume(boxPtr);
-  double surfaceArea = calculateSurfaceArea(boxPtr);
-
-  printf("Volume of the box: %.2lf\n", volume);
-  printf("Total surface area of the box: %.2lf\n", surfaceArea);
-
-  return 0;
+    free(students);
+    return 0;
 }
